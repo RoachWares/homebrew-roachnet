@@ -17,6 +17,8 @@ The Homebrew lane also writes the contained RoachNet config automatically, disab
 
 Current desktop build notes:
 
-- RoachClaw can read the full local workbench context when the user arms vault, captured-web, project, and app-state access.
+- RoachClaw can be opened from anywhere in the native app and from the global command bar, with voice prompts routed through the same permissioned context controls.
+- RoachBrain compiles saved memories into an Obsidian-readable local wiki inside the selected RoachNet storage root for RAG-style context without a cloud handoff.
 - Vault content opens in built-in reader/player/preview lanes instead of bouncing everything out to Finder.
-- Dev Studio keeps a contained terminal history and richer editor/status chrome so the app feels closer to a real IDE desk.
+- Dev Studio keeps project context, editor state, inline RoachClaw assist, and shell context in one contained IDE desk.
+- Published macOS DMG SHA-256 for `v1.0.4`: `538f519ae53d0f4378927c0542be4714fa8481812d7052d0cc11ff74891133de`.

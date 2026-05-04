@@ -1,15 +1,15 @@
 cask "roachnet" do
-  local_dmg = ENV["ROACHNET_CASK_LOCAL_DMG"]
-  local_sha = ENV["ROACHNET_CASK_LOCAL_SHA"]
+  local_dmg = ENV.fetch("ROACHNET_CASK_LOCAL_DMG", nil)
+  local_sha = ENV.fetch("ROACHNET_CASK_LOCAL_SHA", nil)
 
-  version "1.0.3"
-  sha256 local_dmg.to_s.empty? ? "c0809de18a73761718ab7a46c05f3a31f2c2ff489ca28fa31936d1ed0050b758" : local_sha
+  version "1.0.4"
+  sha256 local_dmg.to_s.empty? ? "538f519ae53d0f4378927c0542be4714fa8481812d7052d0cc11ff74891133de" : local_sha
 
   url local_dmg.to_s.empty? ? "https://github.com/AHGRoach/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg" : "file://#{local_dmg}",
       verified: local_dmg.to_s.empty? ? "github.com/AHGRoach/RoachNet/" : nil
   name "RoachNet"
-  desc "Local-first desktop command center for maps, models, dev tools, and your own notes"
-  homepage "https://roachnet.org"
+  desc "Local-first desktop command center for maps, models, and vaults"
+  homepage "https://roachnet.org/"
 
   livecheck do
     url :url
@@ -24,7 +24,6 @@ cask "roachnet" do
 
   postflight do
     require "json"
-    require "shellwords"
     require "securerandom"
     require "time"
 
@@ -36,34 +35,41 @@ cask "roachnet" do
     config_path = File.join(support_root, "roachnet-installer.json")
     legacy_config_path = File.join(Dir.home, ".roachnet-setup.json")
     embedded_node = File.join(app_path, "Contents", "Resources", "EmbeddedRuntime", "node", "bin", "node")
-    roachtail_alias_installer = File.join(app_path, "Contents", "Resources", "RoachNetSource", "scripts", "install-roachtail-hostname.mjs")
+    roachtail_alias_installer = File.join(
+      app_path,
+      "Contents",
+      "Resources",
+      "RoachNetSource",
+      "scripts",
+      "install-roachtail-hostname.mjs"
+    )
     timestamp = Time.now.utc.iso8601
 
     config = {
-      "installPath" => install_root,
-      "installedAppPath" => app_path,
-      "storagePath" => storage_path,
-      "installProfile" => "homebrew-cask",
-      "useDockerContainerization" => false,
-      "installRoachClaw" => true,
-      "companionEnabled" => false,
-      "companionHost" => "127.0.0.1",
-      "companionPort" => 38111,
-      "companionToken" => SecureRandom.hex(32),
-      "companionAdvertisedURL" => "",
-      "roachClawDefaultModel" => "qwen2.5-coder:1.5b",
+      "installPath"                 => install_root,
+      "installedAppPath"            => app_path,
+      "storagePath"                 => storage_path,
+      "installProfile"              => "homebrew-cask",
+      "useDockerContainerization"   => false,
+      "installRoachClaw"            => true,
+      "companionEnabled"            => false,
+      "companionHost"               => "127.0.0.1",
+      "companionPort"               => 38111,
+      "companionToken"              => SecureRandom.hex(32),
+      "companionAdvertisedURL"      => "",
+      "roachClawDefaultModel"       => "qwen2.5-coder:1.5b",
       "distributedInferenceBackend" => "disabled",
-      "exoBaseUrl" => "http://127.0.0.1:52415",
-      "exoModelId" => "",
-      "autoInstallDependencies" => false,
-      "autoLaunch" => true,
-      "releaseChannel" => "stable",
-      "setupCompletedAt" => timestamp,
-      "bootstrapPending" => true,
-      "bootstrapFailureCount" => 0,
-      "lastRuntimeHealthAt" => nil,
-      "pendingLaunchIntro" => false,
-      "pendingRoachClawSetup" => true,
+      "exoBaseUrl"                  => "http://127.0.0.1:52415",
+      "exoModelId"                  => "",
+      "autoInstallDependencies"     => false,
+      "autoLaunch"                  => true,
+      "releaseChannel"              => "stable",
+      "setupCompletedAt"            => timestamp,
+      "bootstrapPending"            => true,
+      "bootstrapFailureCount"       => 0,
+      "lastRuntimeHealthAt"         => nil,
+      "pendingLaunchIntro"          => false,
+      "pendingRoachClawSetup"       => true,
     }
 
     FileUtils.mkdir_p(support_root)
@@ -71,9 +77,20 @@ cask "roachnet" do
     FileUtils.mkdir_p(local_bin_path)
     File.write(config_path, "#{JSON.pretty_generate(config)}\n")
     File.write(legacy_config_path, "#{JSON.pretty_generate(config)}\n")
-    system "/bin/sh", "-c", "/usr/bin/xattr -d com.apple.quarantine #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
-    system "/bin/sh", "-c", "/usr/bin/xattr -d com.apple.provenance #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
-    system "/bin/sh", "-c", "/usr/bin/xattr -cr #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
+    xattr_targets = [app_path]
+    macos_dir = File.join(app_path, "Contents", "MacOS")
+    if Dir.exist?(macos_dir)
+      xattr_targets.concat(Dir.children(macos_dir).map { |entry| File.join(macos_dir, entry) })
+    end
+    xattr_targets.each do |target|
+      next unless File.exist?(target)
+
+      system "/usr/bin/xattr", "-d", "com.apple.quarantine", target, out: File::NULL, err: File::NULL
+      system "/usr/bin/xattr", "-d", "com.apple.provenance", target, out: File::NULL, err: File::NULL
+    end
+    system "/usr/bin/xattr", "-dr", "com.apple.provenance", app_path, out: File::NULL, err: File::NULL
+    system "/usr/bin/xattr", "-dr", "com.apple.quarantine", app_path, out: File::NULL, err: File::NULL
+    system "/usr/bin/xattr", "-cr", app_path, out: File::NULL, err: File::NULL
     if File.exist?(embedded_node) && File.exist?(roachtail_alias_installer)
       system(
         {
@@ -81,7 +98,7 @@ cask "roachnet" do
         },
         embedded_node,
         roachtail_alias_installer,
-        "--interactive"
+        "--interactive",
       )
     end
   end
