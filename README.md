@@ -6,7 +6,7 @@ Homebrew tap for installing RoachNet on Apple Silicon Macs.
 
 ```bash
 brew update
-brew tap --force AHGRoach/roachnet
+brew tap --force RoachWares/roachnet
 brew install --cask roachnet
 open ~/RoachNet/app/RoachNet.app
 ```
@@ -21,4 +21,4 @@ Current desktop build notes:
 - RoachBrain compiles saved memories into an Obsidian-readable local wiki inside the selected RoachNet storage root for RAG-style context without a cloud handoff.
 - Vault content opens in built-in reader/player/preview lanes instead of bouncing everything out to Finder.
 - Dev Studio keeps project context, editor state, inline RoachClaw assist, and shell context in one contained IDE desk.
-- Published macOS DMG SHA-256 for `v1.0.4`: `538f519ae53d0f4378927c0542be4714fa8481812d7052d0cc11ff74891133de`.
+- Published macOS DMG SHA-256 for `v1.0.4`: `d1eff45747f8538bc7d3b01c1655f72f755f328301b2a14d75893ba68372192f`.
