@@ -2,8 +2,8 @@ cask "roachnet" do
   local_dmg = ENV.fetch("ROACHNET_CASK_LOCAL_DMG", nil)
   local_sha = ENV.fetch("ROACHNET_CASK_LOCAL_SHA", nil)
 
-  version "1.0.4"
-  sha256 local_dmg.to_s.empty? ? "5a6fb6170970e0bd48ec667804d08dbc86ab6462a38a8feb0e7cf26b0eb4d2fe" : local_sha
+  version "1.0.5"
+  sha256 local_dmg.to_s.empty? ? "587b1e4d6abd84b1f50b4a41ca9d14142b05982554f59f1c241e8bbcfad07d2c" : local_sha
 
   url local_dmg.to_s.empty? ? "https://github.com/RoachWares/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg" : "file://#{local_dmg}",
       verified: local_dmg.to_s.empty? ? "github.com/RoachWares/RoachNet/" : nil
