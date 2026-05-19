@@ -21,4 +21,4 @@ Current desktop build notes:
 - RoachBrain compiles saved memories into an Obsidian-readable local wiki inside the selected RoachNet storage root for RAG-style context without a cloud handoff.
 - Vault content opens in built-in reader/player/preview lanes instead of bouncing everything out to Finder.
 - Dev Studio keeps project context, editor state, inline RoachClaw assist, and shell context in one contained IDE desk.
-- Published macOS DMG SHA-256 for `v1.0.5`: `587b1e4d6abd84b1f50b4a41ca9d14142b05982554f59f1c241e8bbcfad07d2c`.
+- Published macOS DMG SHA-256 for `v1.0.5`: `1f0fb6742612c4bbf52f6facdc73ca76e84266a9afa6864bed6ccd0cb5fb0eef`.
