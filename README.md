@@ -13,7 +13,7 @@ open ~/RoachNet/app/RoachNet.app
 
 RoachNet lands in `~/RoachNet/app/RoachNet.app` so the app, storage, and local tools stay grouped inside the RoachNet folder instead of scattering across the machine.
 
-The Homebrew lane also writes the contained RoachNet config automatically, disables the companion bridge on first boot, skips the launch intro, and stages the compiled runtime in `~/RoachNet/storage/state/runtime-cache` so a fresh Apple Silicon install does not depend on host Homebrew dylibs.
+Starting with 1.0.6 the cask runs RoachNet Setup's native installer (`roachnet-runtime --install`), the same staged install the Setup app performs: Apple Silicon and macOS checks, a contained Ollama runner, a smoke test of the new runtime before it replaces the old one, and storage preserved across upgrades. No Node runtime, source tree, or host Homebrew dylibs are involved. The companion bridge stays off until you enable it in the app.
 
 Current desktop build notes:
 
@@ -22,3 +22,4 @@ Current desktop build notes:
 - Vault content opens in built-in reader/player/preview lanes instead of bouncing everything out to Finder.
 - Dev Studio keeps project context, editor state, inline RoachClaw assist, and shell context in one contained IDE desk.
 - Published macOS DMG SHA-256 for `v1.0.5`: `332057c4f85d136882971957d907bec82e7657833272d30d0849990590e1d122`.
+- `v1.0.6` (native runtime) checksum is filled in when the DMG is built; this branch must not be pushed before then.
