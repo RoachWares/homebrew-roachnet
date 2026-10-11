@@ -22,4 +22,4 @@ Current desktop build notes:
 - Vault content opens in built-in reader/player/preview lanes instead of bouncing everything out to Finder.
 - Dev Studio keeps project context, editor state, inline RoachClaw assist, and shell context in one contained IDE desk.
 - Published macOS DMG SHA-256 for `v1.0.5`: `332057c4f85d136882971957d907bec82e7657833272d30d0849990590e1d122`.
-- `v1.0.6` (native runtime) checksum is filled in when the DMG is built; this branch must not be pushed before then.
+- Published macOS DMG SHA-256 for `v1.0.6` (native Swift runtime): `b6a31dc48faf6a48822bb6770fc8958473c2e0bed460e5ca131f9ab460a90a6f`. Ad-hoc signed, not Apple-notarized; the cask clears the quarantine flags on the setup app before it runs the installer.
