@@ -13,7 +13,7 @@ open ~/RoachNet/app/RoachNet.app
 
 RoachNet lands in `~/RoachNet/app/RoachNet.app` so the app, storage, and local tools stay grouped inside the RoachNet folder instead of scattering across the machine.
 
-Starting with 1.0.6 the cask runs RoachNet Setup's native installer (`roachnet-runtime --install`), the same staged install the Setup app performs: Apple Silicon and macOS checks, a contained Ollama runner, a smoke test of the new runtime before it replaces the old one, and storage preserved across upgrades. No Node runtime, source tree, or host Homebrew dylibs are involved. The companion bridge stays off until you enable it in the app.
+Starting with 1.0.6 the cask runs RoachNet Setup's native installer (`roachnet-runtime --install`), the same staged install the Setup app performs: Apple Silicon and macOS checks, a smoke test of the new runtime before it replaces the old one, and storage preserved across upgrades. No Node runtime, source tree, or host Homebrew dylibs are involved, and since 1.1 no model runner either: RoachClaw runs on RoachInference inside the helper. The companion bridge stays off until you enable it in the app.
 
 Current desktop build notes:
 
@@ -24,3 +24,4 @@ Current desktop build notes:
 - Published macOS DMG SHA-256 for `v1.0.5`: `332057c4f85d136882971957d907bec82e7657833272d30d0849990590e1d122`.
 - Published macOS DMG SHA-256 for `v1.0.6` (native Swift runtime): `b6a31dc48faf6a48822bb6770fc8958473c2e0bed460e5ca131f9ab460a90a6f`.
 - Published macOS DMG SHA-256 for `v1.0.7` (native Swift runtime; security patch for 1.0.6): `2ccf51663fa559f3461304c7f2644e697483eccd9543734ee684b87c4c2bf6e3`. Ad-hoc signed, not Apple-notarized; the cask clears the quarantine flags on the setup app before it runs the installer.
+- Published macOS DMG SHA-256 for `v1.1.0` (RoachInference, Org, themes, feature packs; no bundled Ollama): `d7854ac9960ed8969e24db9f7e95d18df8b80c2d2333eaa7f164bb1c4a6f66bd`. Ad-hoc signed, not Apple-notarized.

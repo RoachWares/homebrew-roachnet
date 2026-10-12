@@ -2,8 +2,8 @@ cask "roachnet" do
   local_dmg = ENV.fetch("ROACHNET_CASK_LOCAL_DMG", nil)
   local_sha = ENV.fetch("ROACHNET_CASK_LOCAL_SHA", nil)
 
-  version "1.0.7"
-  sha256 local_dmg.to_s.empty? ? "2ccf51663fa559f3461304c7f2644e697483eccd9543734ee684b87c4c2bf6e3" : local_sha
+  version "1.1.0"
+  sha256 local_dmg.to_s.empty? ? "d7854ac9960ed8969e24db9f7e95d18df8b80c2d2333eaa7f164bb1c4a6f66bd" : local_sha
 
   url local_dmg.to_s.empty? ? "https://github.com/RoachWares/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg" : "file://#{local_dmg}",
       verified: local_dmg.to_s.empty? ? "github.com/RoachWares/RoachNet/" : nil
@@ -24,8 +24,9 @@ cask "roachnet" do
 
   # 1.0.6+: RoachNet Setup carries the native Swift installer
   # (Contents/Helpers/roachnet-runtime). The cask runs the same staged install the
-  # Setup app uses (preflight, contained Ollama, runtime smoke test, root swap with
-  # storage preservation, RoachTail alias) — no Node, source tree, or .env files.
+  # Setup app uses (preflight, runtime smoke test, root swap with storage
+  # preservation, RoachTail alias) — no Node, source tree, or .env files. 1.1+
+  # installs no model runner: RoachClaw runs on RoachInference inside the helper.
   postflight do
     install_root = File.join(Dir.home, "RoachNet")
     setup_app_path = File.join(install_root, "setup", "RoachNet Setup.app")
