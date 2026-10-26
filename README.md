@@ -6,7 +6,7 @@
 
 The Homebrew tap for [RoachNet](https://roachnet.org/), the offline-first Mac app for local AI, code, maps, media and your vault. The cask installs the same release as the disk image and keeps your data across upgrades.
 
-**roachnet 1.1.2** · Apple Silicon, macOS 14 or later · [Homebrew guide](https://roachnet.org/docs/get-started/homebrew/)
+**roachnet 1.1.3** · Apple Silicon, macOS 14 or later · [Homebrew guide](https://roachnet.org/docs/get-started/homebrew/)
 
 ## Install
 
